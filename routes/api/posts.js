@@ -43,7 +43,7 @@ router.post(
 //  @access Private
 router.get("/", auth, async (req, res) => {
   try {
-    const posts = await User.find().sort({ date: -1 });
+    const posts = await Post.find().sort({ date: -1 });
 
     res.json(posts);
   } catch (error) {
@@ -57,9 +57,30 @@ router.get("/", auth, async (req, res) => {
 //  @access Private
 router.get("/:id", auth, async (req, res) => {
   try {
-    const post = await User.findById(req.params.id);
+    const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ msg: "post not found" });
     res.json(post);
+  } catch (error) {
+    console.log(error.message);
+    if (error.kind === "ObjectId")
+      return res.status(404).json({ msg: "post not found" });
+    res.status(500).send("Server error");
+  }
+});
+
+//  @route  Delete api/posts/:id
+//  @desc   Get a post by ID
+//  @access Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ msg: "post not found" });
+
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "user not autherized " });
+    }
+    await Post.deleteOne();
+    res.json({ msg: "post removed" });
   } catch (error) {
     console.log(error.message);
     if (error.kind === "ObjectId")
