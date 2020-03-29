@@ -15,15 +15,17 @@ router.post(
     check("name", "Name is required")
       .not()
       .isEmpty(),
+    check("email", "please include a valid email").isEmail(),
     check(
       "password",
-      check("email", "please include a valid email").isEmail(),
       "please enter a password with 6 or more characters"
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log(errors);
+
       return res.status(400).json({ error: errors.array() });
     }
     const { name, email, password } = req.body;

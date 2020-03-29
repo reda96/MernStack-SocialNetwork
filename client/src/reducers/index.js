@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
 import alert from "./alert";
-const rootReducer = combineReducers({ alert });
+import register from "./auth";
+const rootReducer = combineReducers({ alert, register });
 export default rootReducer;
