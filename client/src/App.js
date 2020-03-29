@@ -10,9 +10,7 @@ import { Provider } from "react-redux";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
+
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
