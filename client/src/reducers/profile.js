@@ -2,7 +2,10 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  DELETE_EXPERIENCE,
+  DELETE_EDUCATION,
+  DELETE_ACCOUNT
 } from "../actions/types";
 
 const initialState = {
