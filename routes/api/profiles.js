@@ -67,7 +67,10 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (skills) {
-      profileFields.skills = skills.split(",").map(skill => skill.trim());
+      if (Array.isArray(skills)) {
+        profileFields.skills = skills;
+      } else
+        profileFields.skills = skills.split(",").map(skill => skill.trim());
     }
     // Build social object
     profileFields.social = {};
