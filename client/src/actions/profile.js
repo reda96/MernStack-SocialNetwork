@@ -25,6 +25,65 @@ export const getCurrentProfile = () => async dispatch => {
   }
 };
 
+// Add an education
+export const addEducation = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify(formData);
+    const res = await axios.put("/api/profile/education", body, config);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+    dispatch(setAlert("Educatione Created", "success"));
+    history.push("/dashboard");
+  } catch (error) {
+    const err = error.response.data.errors;
+    if (err) {
+      err.array.forEach(e => dispatch(setAlert(error.msg, "danger")));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Add an experience
+export const addExperience = (formData, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify(formData);
+    const res = await axios.put("/api/profile/experience", body, config);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+    dispatch(setAlert("Experience Created", "success"));
+    history.push("/dashboard");
+  } catch (error) {
+    const err = error.response.data.errors;
+    if (err) {
+      err.array.forEach(e => dispatch(setAlert(error.msg, "danger")));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
 // Delete account & profile
 export const deleteAccount = () => async dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
