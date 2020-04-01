@@ -39,7 +39,7 @@ const EditProfile = ({
       }
       setFormData(profileData);
     }
-  }, [loading, getCurrentProfile, profile]);
+  }, [loading, getCurrentProfile, profile, initialState]);
   const {
     company,
     website,
