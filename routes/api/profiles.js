@@ -66,6 +66,7 @@ router.post(
     if (company) profileFields.company = company;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
+    if (githubusername) profileFields.githubusername = githubusername;
     if (status) profileFields.status = status;
     if (skills) {
       if (Array.isArray(skills)) {
@@ -108,7 +109,10 @@ router.post(
 //  @access Public
 router.get("/", async (req, res) => {
   try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    const profiles = await Profile.find({}).populate("user", [
+      "name",
+      "avatar"
+    ]);
     res.json(profiles);
   } catch (error) {
     console.log(error.message);
@@ -123,12 +127,12 @@ router.get("/user/:user_id", async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id
-    }).populate(("user", ["name", "avatar"]));
+    }).populate("user", ["name", "avatar"]);
     if (!profile) return res.status(400).json({ msg: "Profile not found" });
     res.json(profile);
   } catch (error) {
     console.log(error.message);
-    if (error.kind("ObjectId")) {
+    if (error.kind == "ObjectId") {
       return res.status(400).json({ msg: "Profile not found" });
     }
     res.status(500).send("Server error");
