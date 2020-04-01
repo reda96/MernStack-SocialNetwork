@@ -16,6 +16,8 @@ import EditProfile from "./components/profile-form/EditProfile";
 import AddEducation from "./components/profile-form/AddEducation";
 import AddExperience from "./components/profile-form/AddExperience";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
 const App = () => {
@@ -37,7 +39,8 @@ const App = () => {
               <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/profile/:id" component={Profile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-
+              <PrivateRoute exact path="/posts" component={Posts} />
+              <PrivateRoute exact path="/posts/:id" component={Post} />
               <PrivateRoute
                 exact
                 path="/create-profile"
